@@ -13,8 +13,59 @@
 
     <h1> This is the NOTES PAGE</h1>
 
+
+    <div class="row">
+            <div class="col-lg-12">
+              <!-- Reservation Page -->
+              <div class="card">
+                <div class="card-header">
+                  Note Taker
+                </div>
+                <div class="card-body">
+                  <form role="form">
+                    <div class="form-group">
+                      <label for="reserve-name">Title</label>
+                      <input type="text" class="form-control" id="title">
+                    </div>
+                    <div class="form-group">
+                      <label for="reserve-phone">Body</label>
+                      <input type="text" class="form-control" id="body">
+                    </div>
+                    
+                    <button id="add-btn" type="submit" class="btn btn-primary submit">Add Note</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+    <script type=text/javascript>
+
+        $("#add-btn").on("click", function(event) {
+            event.preventDefault();
+            var newNote = {
+                title: $("#title").val().trim();
+                body: $("#body").val().trim();
+            };
+        
+        $.post("/api/write_notes". newNote)
+        .then(function (data) {
+            console.log("notes.html", data);
+            alert("Adding a new note");
+            });
+            
+            $.get("/api/notes" + newNote, function (data) {
+                console.log(data);
+                $("notes-saved").show();
+                $("#title").text(data.title);
+                $("#body").text(data.body);
+            });
+        });
+      
+      </script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
 </body>
 </html>
