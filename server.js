@@ -33,17 +33,11 @@ app.post("/api/write_notes", function(req, res){
 });
 
 app.delete("/api/notes/:id",function(req, res){
-    connection.query("DELETE FROM notes WHERE id = ?", [req.params.id], function(err, result) {
+    connection.query("DELETE FROM notes WHERE id = ?", [req.params.id], function(err, res) {
         if(err){ throw err
         // return res.status(500).end();
     }
-    // else if (result.affectedRows === 0) {
-        // If no rows were changed, then the ID must not exist, so 404
-    //     return res.status(404).end();
-    //   }
-    //   res.status(200).end();
-
-    });
+});
 });
 // Route to Index.html
 app.get("/", function (req,res){
