@@ -11,7 +11,7 @@
 </head>
 <body>
 
-    <h1> This is the NOTES PAGE</h1>
+   <h1> This is the NOTES PAGE</h1>
 
 
     <div class="row">
@@ -31,6 +31,8 @@
                       <label for="reserve-phone">Body</label>
                       <input type="text" class="form-control" id="body">
                     </div>
+
+                    
                     
                     <button id="add-btn" type="submit" class="btn btn-primary submit">Add Note</button>
                   </form>
@@ -38,8 +40,44 @@
               </div>
             </div>
           </div>
+          <div id="notes-saved"></div>
+
+          
+        
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type=text/javascript>
+
+var renderList = $("#notes-saved");
+        var showNotes = function(notes){
+            renderList.empty();
+            var listItems = [];
+            for (var i =0; i < notes.length; i++){
+                $("#notes-saved").show();
+                var $title = $("<h3>");
+                var $body = $("<h3>");
+                var $btn = $("<button>")
+                $btn.text("delete");
+                $btn.attr("data-id", notes[i].id);
+                $btn.addClass("delete");
+                $title.text(notes[i].title);
+                $body.text(notes[i].body);
+                renderList.append($title, $body, $btn);
+            
+            }
+        }
+
+    let renderNotes = function(){
+        $.get("/api/notes", function (data) {
+                console.log(data);
+              
+                showNotes(data);
+                
+            });
+    }
+    renderNotes();
+    
+
+    
 
         $("#add-btn").on("click", function(event) {
             event.preventDefault();
@@ -59,9 +97,23 @@
                 $("notes-saved").show();
                 $("#title").text(data.title);
                 $("#body").text(data.body);
+                location.reload();
             });
-        });
-      
+          
+            
+          });
+          
+          $(document).on("click", ".delete", function (event) {
+            var id = $(this).data("id");
+            $.ajax("/api/notes/" + id, {
+              type: "DELETE"
+          }).then(function() {
+          console.log("Deleted Note", id)
+            })
+            })
+         
+
+        
       </script>
 
 

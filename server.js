@@ -32,7 +32,7 @@ app.post("/api/write_notes", function(req, res){
     });
 });
 
-app.delete ("/api/delete_notes/:id",function(req, res){
+app.delete("/api/notes/:id",function(req, res){
     connection.query("DELETE FROM notes WHERE id = ?", [req.params.id], function(err, result) {
         if(err){ throw err
         // return res.status(500).end();
