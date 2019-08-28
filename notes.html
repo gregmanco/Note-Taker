@@ -6,41 +6,43 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0-11/css/all.min.css">
-
-<title>Title</title>
+<link rel="stylesheet"  href=" /css/style.css " type=" css/text">
+<title class=>Note Taker</title>
 </head>
-<body>
+<body class="bg-primary">
 
-   <h1> This is the NOTES PAGE</h1>
+   <h1 class="text-black-50 bg-dark" id="Heading"> Take Some Notes. Relax. Delete Em Notes. </h1>
 
 
-    <div class="row">
+    <div  class="row">
             <div class="col-lg-12">
               <!-- Reservation Page -->
-              <div class="card">
+              <div class="card bg-secondary">
                 <div class="card-header">
-                  Note Taker
+                  <h3 class="text-body">Note Taker</h3>
                 </div>
                 <div class="card-body">
                   <form role="form">
-                    <div class="form-group">
+                    <div class="form-group bg-light">
                       <label for="reserve-name">Title</label>
                       <input type="text" class="form-control" id="title">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group bg-light">
                       <label for="reserve-phone">Body</label>
                       <input type="text" class="form-control" id="body">
                     </div>
 
                     
                     
-                    <button id="add-btn" type="submit" class="btn btn-primary submit">Add Note</button>
+                    <button id="add-btn" type="submit" class="btn btn-dark submit">Add Note</button>
                   </form>
                 </div>
               </div>
             </div>
           </div>
-          <div id="notes-saved"></div>
+          <br>
+          <br>
+          <div class="bg-dark text-info" id="notes-saved"></div>
 
           
         
@@ -56,11 +58,13 @@ var renderList = $("#notes-saved");
                 var $title = $("<h3>");
                 var $body = $("<h3>");
                 var $btn = $("<button>")
-                $btn.text("delete");
+                $btn.text("Delete");
                 $btn.attr("data-id", notes[i].id);
-                $btn.addClass("delete");
+                $btn.addClass("delete, btn-danger");
                 $title.text(notes[i].title);
+                $title.addClass("text-primary");
                 $body.text(notes[i].body);
+                $body.addClass("text-black-50");
                 renderList.append($title, $body, $btn);
             
             }
@@ -103,7 +107,7 @@ var renderList = $("#notes-saved");
             
           });
           
-          $(document).on("click", ".delete", function (event) {
+          $(document).on("click", ".btn-danger", function (event) {
             var id = $(this).data("id");
             $.ajax("/api/notes/" + id, {
               type: "DELETE"
